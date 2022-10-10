@@ -6,7 +6,7 @@
         public string Descricao { get; set; } = default!;
 
         //EfCore Relational
-        public List<Colaborador> Colaboradores { get; set; } = default!;
+        public List<Colaborador>? Colaboradores { get; set; }
 
     }
 }

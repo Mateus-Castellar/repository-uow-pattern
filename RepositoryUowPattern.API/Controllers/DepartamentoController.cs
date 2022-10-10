@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RepositoryUowPattern.API.Data.Repository;
+using RepositoryUowPattern.API.Models;
 
 namespace RepositoryUowPattern.API.Controllers
 {
@@ -25,6 +26,14 @@ namespace RepositoryUowPattern.API.Controllers
 
             var result = await _departamentoRepository.GetByIdAsync(id);
             return Ok(result);
+        }
+
+        [HttpPost]
+        public IActionResult CreateDepartamento(Departamento departamento)
+        {
+            _departamentoRepository.Add(departamento);
+            var save = _departamentoRepository.Save();
+            return Ok(departamento);
         }
     }
 }
