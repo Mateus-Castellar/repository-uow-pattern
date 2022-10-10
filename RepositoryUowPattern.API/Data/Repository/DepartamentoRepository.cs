@@ -27,9 +27,11 @@ namespace RepositoryUowPattern.API.Data.Repository
                 ?? throw new ArgumentNullException("", "Não foi possível obter o fornecedor");
         }
 
-        public bool Save()
-        {
-            return _context.SaveChanges() > 0;
-        }
+
+        ///RESPONSABILIDADE DO UNIT OF WORK
+        //public bool Save()
+        //{
+        //    return _context.SaveChanges() > 0;
+        //}
     }
 }

@@ -6,6 +6,8 @@ namespace RepositoryUowPattern.API.Data.Repository
     {
         Task<Departamento> GetByIdAsync(int id);
         void Add(Departamento departamento);
-        bool Save();
+
+        //RESPONSABILIDADE DO UNIT OF WORK
+        //bool Save();
     }
 }

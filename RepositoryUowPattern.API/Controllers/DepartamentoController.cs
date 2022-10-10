@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RepositoryUowPattern.API.Data;
 using RepositoryUowPattern.API.Data.Repository;
 using RepositoryUowPattern.API.Models;
 
@@ -10,11 +11,14 @@ namespace RepositoryUowPattern.API.Controllers
     {
         private readonly ILogger<DepartamentoController> _logger;
         private readonly IDepartamentoRepository _departamentoRepository;
+        private readonly IUnitOfWork _uow;
 
-        public DepartamentoController(ILogger<DepartamentoController> logger, IDepartamentoRepository departamentoRepository)
+        public DepartamentoController(ILogger<DepartamentoController> logger,
+            IDepartamentoRepository departamentoRepository, IUnitOfWork uow)
         {
             _logger = logger;
             _departamentoRepository = departamentoRepository;
+            _uow = uow;
         }
 
         [HttpGet("{id}")]
@@ -32,7 +36,8 @@ namespace RepositoryUowPattern.API.Controllers
         public IActionResult CreateDepartamento(Departamento departamento)
         {
             _departamentoRepository.Add(departamento);
-            var save = _departamentoRepository.Save();
+            //var save = _departamentoRepository.Save();
+            _uow.Commit();
             return Ok(departamento);
         }
     }
