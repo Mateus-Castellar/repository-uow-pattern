@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RepositoryUowPattern.API.Data;
 using RepositoryUowPattern.API.Models;
 
@@ -57,5 +58,15 @@ namespace RepositoryUowPattern.API.Controllers
             return Ok(departamento);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetDepartamentoAsync([FromQuery] string descricao)
+        {
+            var departamentos = await _uow.DepartamentoRepository
+                .GetDataAsync(departamento => departamento.Descricao.Contains(descricao),
+                departamentos => departamentos.Include(lbda => lbda.Colaboradores),
+                take: 2);
+
+            return Ok(departamentos);
+        }
     }
 }
