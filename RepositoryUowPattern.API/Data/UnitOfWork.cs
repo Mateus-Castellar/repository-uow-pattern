@@ -1,4 +1,6 @@
-﻿namespace RepositoryUowPattern.API.Data
+﻿using RepositoryUowPattern.API.Data.Repository;
+
+namespace RepositoryUowPattern.API.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -7,6 +9,12 @@
         public UnitOfWork(ApplicationContext context)
         {
             _context = context;
+        }
+
+        private IDepartamentoRepository? _departamentoRepository;
+        public IDepartamentoRepository DepartamentoRepository
+        {
+            get => _departamentoRepository ??= new DepartamentoRepository(_context);
         }
 
         public bool Commit()
