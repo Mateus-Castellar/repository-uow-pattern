@@ -15,8 +15,8 @@ namespace RepositoryUowPattern.API.Controllers
         public DepartamentoController(ILogger<DepartamentoController> logger,
             /*IDepartamentoRepository departamentoRepository, */IUnitOfWork uow)
         {
-            _logger = logger;
             //_departamentoRepository = departamentoRepository;
+            _logger = logger;
             _uow = uow;
         }
 
@@ -29,6 +29,7 @@ namespace RepositoryUowPattern.API.Controllers
 
             //var result = await _departamentoRepository.GetByIdAsync(id);
             var result = await _uow.DepartamentoRepository.GetByIdAsync(id);
+
             return Ok(result);
         }
 
@@ -38,8 +39,23 @@ namespace RepositoryUowPattern.API.Controllers
             //_departamentoRepository.Add(departamento);
             _uow.DepartamentoRepository.Add(departamento);
             //var save = _departamentoRepository.Save();
+
             _uow.Commit();
+
             return Ok(departamento);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveDepartamento(int id)
+        {
+            var departamento = await _uow.DepartamentoRepository.GetByIdAsync(id);
+
+            _uow.DepartamentoRepository.Delete(departamento);
+
+            _uow.Commit();
+
+            return Ok(departamento);
+        }
+
     }
 }
